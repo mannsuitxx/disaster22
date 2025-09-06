@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">PULSE AI</h1>
-              <p className="text-xs text-gray-600">PUNJAB UNIFIED LIFE SAFETY & EMERGENCY AGENCY</p>
+              <p className="text-xs text-gray-600">PUNJAB UNIFIED LIFE SAFETY & EMERGENCY AI</p>
             </div>
           </div>
 
