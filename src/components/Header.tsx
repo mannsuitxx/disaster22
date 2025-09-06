@@ -38,8 +38,8 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">SafeLearn India</h1>
-              <p className="text-xs text-gray-600">Disaster Preparedness Education</p>
+              <h1 className="text-xl font-bold text-gray-900">PULSE AI</h1>
+              <p className="text-xs text-gray-600">PUNJAB UNIFIED LIFE SAFETY & EMERGENCY AGENCY</p>
             </div>
           </div>
 
