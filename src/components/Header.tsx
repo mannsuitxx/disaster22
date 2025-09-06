@@ -1,5 +1,5 @@
-import React from 'react';
-import { Shield, Menu, User, Bell } from 'lucide-react';
+import React from "react";
+import { Shield, Menu, User, Bell } from "lucide-react";
 
 interface HeaderProps {
   currentView: string;
@@ -8,20 +8,25 @@ interface HeaderProps {
   onRoleChange: (role: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRoleChange }) => {
+const Header: React.FC<HeaderProps> = ({
+  currentView,
+  onNavigate,
+  userRole,
+  onRoleChange,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const navigationItems = [
-    { id: 'home', path: '/', label: 'Home', roles: ['student', 'teacher', 'admin'] },
-    { id: 'dashboard', path: '/dashboard', label: 'Dashboard', roles: ['student', 'teacher', 'admin'] },
-    { id: 'modules', path: '/modules', label: 'Learn', roles: ['student', 'teacher', 'admin'] },
-    { id: 'drills', path: '/drills', label: 'Virtual Drills', roles: ['student', 'teacher', 'admin'] },
-    { id: 'games', path: '/games', label: 'Games', roles: ['student', 'teacher', 'admin'] },
-    { id: 'contacts', path: '/contacts', label: 'Emergency', roles: ['student', 'teacher', 'admin'] },
-    { id: 'admin', path: '/admin', label: 'Admin', roles: ['admin'] },
+    { id: "home", path: "/", label: "Home", roles: ["student", "teacher", "admin"] },
+    { id: "dashboard", path: "/dashboard", label: "Dashboard", roles: ["student", "teacher", "admin"] },
+    { id: "modules", path: "/modules", label: "Learn", roles: ["student", "teacher", "admin"] },
+    { id: "drills", path: "/drills", label: "Virtual Drills", roles: ["student", "teacher", "admin"] },
+    { id: "games", path: "/games", label: "Games", roles: ["student", "teacher", "admin"] },
+    { id: "contacts", path: "/contacts", label: "Emergency", roles: ["student", "teacher", "admin"] },
+    { id: "admin", path: "/admin", label: "Admin", roles: ["admin"] },
   ];
 
-  const filteredNavItems = navigationItems.filter(item => 
+  const filteredNavItems = navigationItems.filter((item) =>
     item.roles.includes(userRole)
   );
 
@@ -30,16 +35,20 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div 
-            className="flex items-center space-x-3 cursor-pointer"
-            onClick={() => onNavigate('/')}
+          <div
+            className="flex items-center space-x-2 min-w-0 cursor-pointer"
+            onClick={() => onNavigate("/")}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <Shield className="w-6 h-6 text-white" />
+            <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
+              <Shield className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">PULSE AI</h1>
-              <p className="text-xs text-gray-600">PUNJAB UNIFIED LIFE SAFETY & EMERGENCY AI</p>
+            <div className="truncate">
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
+                PULSE AI
+              </h1>
+              <p className="text-[10px] sm:text-xs text-gray-600 truncate">
+                PUNJAB UNIFIED LIFE SAFETY & EMERGENCY AI
+              </p>
             </div>
           </div>
 
@@ -51,8 +60,8 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
                 onClick={() => onNavigate(item.path)}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentView === item.id
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-blue-700 hover:bg-blue-50'
+                    ? "bg-blue-100 text-blue-700"
+                    : "text-gray-600 hover:text-blue-700 hover:bg-blue-50"
                 }`}
               >
                 {item.label}
@@ -63,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
           {/* User Controls */}
           <div className="flex items-center space-x-4">
             <Bell className="w-5 h-5 text-gray-600 cursor-pointer hover:text-blue-700" />
-            
+
             <select
               value={userRole}
               onChange={(e) => onRoleChange(e.target.value)}
@@ -90,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden py-4 border-t border-gray-200 animate-slideDown">
             <div className="flex flex-col space-y-2">
               {filteredNavItems.map((item) => (
                 <button
@@ -101,8 +110,8 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, userRole, onRo
                   }}
                   className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors ${
                     currentView === item.id
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'text-gray-600 hover:text-blue-700 hover:bg-blue-50'
+                      ? "bg-blue-100 text-blue-700"
+                      : "text-gray-600 hover:text-blue-700 hover:bg-blue-50"
                   }`}
                 >
                   {item.label}
