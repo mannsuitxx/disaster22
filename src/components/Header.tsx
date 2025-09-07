@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   const navigationItems = [
     { id: "home", path: "/", label: "Home", roles: ["student", "teacher", "admin"] },
     { id: "dashboard", path: "/dashboard", label: "Dashboard", roles: ["student", "teacher", "admin"] },
-    { id: "modules", path: "/modules", label: "Learn", roles: ["student", "teacher", "admin"] },
+    { id: "modules", path: "/modules", label: "Resources", roles: ["student", "teacher", "admin"] },
     { id: "drills", path: "/drills", label: "Virtual Drills", roles: ["student", "teacher", "admin"] },
     { id: "games", path: "/games", label: "Games", roles: ["student", "teacher", "admin"] },
     { id: "contacts", path: "/contacts", label: "Emergency", roles: ["student", "teacher", "admin"] },
