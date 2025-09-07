@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin: "*", // Allow frontend (both localhost & Render)
     methods: ["GET", "POST"]
   }
 });
@@ -30,22 +30,27 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
-  
+  console.log('⚡ User connected:', socket.id);
+
   socket.on('join-institution', (institutionId) => {
     socket.join(`institution-${institutionId}`);
     console.log(`User ${socket.id} joined institution ${institutionId}`);
   });
-  
+
   socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
+    console.log('❌ User disconnected:', socket.id);
   });
 });
 
 // Make io accessible to routes
 app.set('io', io);
 
-// Routes
+// ✅ Health check FIRST (so it doesn’t get overridden by React route)
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'SafeLearn India API is running' });
+});
+
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/modules', moduleRoutes);
 app.use('/api/drills', drillRoutes);
@@ -53,14 +58,9 @@ app.use('/api/games', gameRoutes);
 app.use('/api/emergency', emergencyRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Serve React app for all non-API routes
+// ✅ React app serve AFTER API
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'SafeLearn India API is running' });
 });
 
 // Error handling middleware
@@ -70,5 +70,5 @@ app.use((err, req, res, next) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`SafeLearn India server running on port ${PORT}`);
+  console.log(`🚀 SafeLearn India server running on port ${PORT}`);
 });
