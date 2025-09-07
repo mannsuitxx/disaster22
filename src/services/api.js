@@ -1,8 +1,9 @@
 const API_BASE_URL = 'http://localhost:5000/api';
+const PROD_URL = 'https://pdma-pulse.onrender.com/api'; // 👈 change if different
 
 // Check if we're in production
 const isProduction = window.location.hostname !== 'localhost';
-const BASE_URL = isProduction ? '/api' : API_BASE_URL;
+const BASE_URL = isProduction ? PROD_URL : API_BASE_URL;
 
 class ApiService {
   constructor() {
@@ -38,23 +39,21 @@ class ApiService {
       const data = await response.json();
 
       if (!response.ok) {
+        console.error("API Response Error:", data);
         throw new Error(data.error || `HTTP ${response.status}: ${response.statusText}`);
       }
 
       return data;
     } catch (error) {
       console.error('API Error:', error);
-      
-      // Handle network errors
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         throw new Error('Network error. Please check your internet connection.');
       }
-      
       throw error;
     }
   }
 
-  // Auth methods
+  // Auth
   async login(email, password) {
     const data = await this.request('/auth/login', {
       method: 'POST',
@@ -77,10 +76,11 @@ class ApiService {
     this.removeToken();
   }
 
-  // Modules methods
+  // Modules
   async getModules(filters = {}) {
     const params = new URLSearchParams(filters);
-    return this.request(`/modules?${params}`);
+    const query = params.toString() ? `?${params}` : '';
+    return this.request(`/modules${query}`);
   }
 
   async getModule(id) {
@@ -94,10 +94,11 @@ class ApiService {
     });
   }
 
-  // Games methods
+  // Games
   async getGames(filters = {}) {
     const params = new URLSearchParams(filters);
-    return this.request(`/games?${params}`);
+    const query = params.toString() ? `?${params}` : '';
+    return this.request(`/games${query}`);
   }
 
   async getGame(id) {
@@ -115,7 +116,7 @@ class ApiService {
     return this.request(`/games/${id}/leaderboard`);
   }
 
-  // Drills methods
+  // Drills
   async getDrills() {
     return this.request('/drills');
   }
@@ -131,17 +132,18 @@ class ApiService {
     });
   }
 
-  // Emergency methods
+  // Emergency
   async getEmergencyContacts(filters = {}) {
     const params = new URLSearchParams(filters);
-    return this.request(`/emergency/contacts?${params}`);
+    const query = params.toString() ? `?${params}` : '';
+    return this.request(`/emergency/contacts${query}`);
   }
 
   async getDisasterAlerts(region = 'all') {
     return this.request(`/emergency/alerts?region=${region}`);
   }
 
-  // Admin methods
+  // Admin
   async getAdminDashboard() {
     return this.request('/admin/dashboard');
   }
